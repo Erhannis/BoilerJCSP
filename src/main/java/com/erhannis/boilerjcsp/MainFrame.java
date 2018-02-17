@@ -426,6 +426,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
       }
     }
+    p.method(JMod.PUBLIC, codeModel.VOID, "run").annotate(Override.class);
     if (1 == 1) {
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       codeModel.build(new SingleStreamCodeWriter(baos));
