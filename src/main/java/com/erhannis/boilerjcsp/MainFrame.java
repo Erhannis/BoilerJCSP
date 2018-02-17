@@ -6,6 +6,8 @@
 package com.erhannis.boilerjcsp;
 
 import com.helger.jcodemodel.AbstractJClass;
+import com.helger.jcodemodel.IJAssignmentTarget;
+import com.helger.jcodemodel.JBlock;
 import com.helger.jcodemodel.JClassAlreadyExistsException;
 import com.helger.jcodemodel.JCodeModel;
 import com.helger.jcodemodel.JDefinedClass;
@@ -13,9 +15,11 @@ import com.helger.jcodemodel.JExpr;
 import com.helger.jcodemodel.JFieldRef;
 import com.helger.jcodemodel.JFieldVar;
 import com.helger.jcodemodel.JInvocation;
+import com.helger.jcodemodel.JLambda;
 import com.helger.jcodemodel.JMethod;
 import com.helger.jcodemodel.JMod;
 import com.helger.jcodemodel.JPackage;
+import com.helger.jcodemodel.JSwitch;
 import com.helger.jcodemodel.JVar;
 import com.helger.jcodemodel.writer.SingleStreamCodeWriter;
 import java.io.ByteArrayOutputStream;
@@ -253,11 +257,29 @@ public class MainFrame extends javax.swing.JFrame {
           }
           c_channels.add(c_chan);
         }
-        AbstractJClass a1 = codeModel.ref(CSProcess.class).array();
-        JFieldRef a2 = a1.staticRef("asdf");
-        JInvocation a3 = JExpr._new(a1);
-        a3.arg(c_process);
-        pi_c.body().invoke("super").arg(a3);
+        JInvocation processArray = JExpr._new(codeModel.ref(CSProcess.class).array());
+        JLambda invocationProcess = new JLambda();
+        {
+          JBlock loopBody = invocationProcess.body()._while(JExpr.TRUE).body();
+          JVar l_mi = loopBody.decl(mi, "mi", c_mici.invoke("read"));
+          JSwitch s = loopBody._switch(l_mi.ref(mi_option));
+          for (int i = 0; i < channelConsts.size(); i++) {
+            ChannelDescription cDesc = channels.get(i);
+            JFieldVar cConst = channelConsts.get(i);
+            JVar cVar = c_channels.get(i);
+            if (cDesc.isInt) {
+              s._case(cConst).body().add(cVar.invoke("write").arg(l_mi.ref(mi_valueInt)))._break();
+            } else {
+              s._case(cConst).body().add(cVar.invoke("write").arg(JExpr.cast(codeModel.ref(cDesc.argType), l_mi.ref(mi_value))))._break();
+            }
+          }
+          s._default().body()._throw(JExpr._new(codeModel.ref(IllegalArgumentException.class)).arg(JExpr.lit("Something went wrong; no method # ").plus(l_mi.ref(mi_option)).plus(" known")));
+        }
+
+        processArray.arg(invocationProcess);
+        processArray.arg(c_process);
+        pi_c.body().invoke("super").arg(processArray);
+        pi_c.body().assign(JExpr._this().ref(mico), c_mico);
       }
     }
 
