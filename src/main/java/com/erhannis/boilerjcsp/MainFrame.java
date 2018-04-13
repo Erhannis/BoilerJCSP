@@ -232,12 +232,12 @@ public class MainFrame extends javax.swing.JFrame {
       ArrayList<JFieldVar> channelConsts = new ArrayList<>();
       for (int i = 0; i < channels.size(); i++) {
         ChannelDescription channel = channels.get(i);
-        JFieldVar cConst = pi.field(JMod.PROTECTED | JMod.STATIC | JMod.FINAL, int.class, "METHOD_" + channel.name, JExpr.lit(i));
+        JFieldVar cConst = pi.field(JMod.PRIVATE | JMod.STATIC | JMod.FINAL, int.class, "METHOD_" + channel.name, JExpr.lit(i));
         channelConsts.add(cConst);
       }
       AbstractJClass rawMicoClazz = codeModel.ref(ChannelOutput.class);
       AbstractJClass micoClazz = rawMicoClazz.narrow(mi);
-      JFieldVar mico = pi.field(JMod.PROTECTED | JMod.FINAL, micoClazz, "methodInvocationChannelOut");
+      JFieldVar mico = pi.field(JMod.PRIVATE | JMod.FINAL, micoClazz, "methodInvocationChannelOut");
       { // 
         JMethod pi_c = pi.constructor(JMod.PUBLIC);
         JVar c_mici = pi_c.param(codeModel.ref(AltingChannelInput.class).narrow(mi), "methodInvocationChannelIn");
