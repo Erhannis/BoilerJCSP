@@ -32,13 +32,21 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.jcsp.lang.AltingChannelInput;
 import org.jcsp.lang.AltingChannelInputInt;
+import org.jcsp.lang.Any2AnyChannel;
+import org.jcsp.lang.Any2AnyChannelInt;
 import org.jcsp.lang.Any2OneChannel;
 import org.jcsp.lang.Any2OneChannelInt;
 import org.jcsp.lang.CSProcess;
 import org.jcsp.lang.Channel;
 import org.jcsp.lang.ChannelOutput;
 import org.jcsp.lang.ChannelOutputInt;
+import org.jcsp.lang.One2AnyChannel;
+import org.jcsp.lang.One2AnyChannelInt;
+import org.jcsp.lang.One2OneChannel;
+import org.jcsp.lang.One2OneChannelInt;
 import org.jcsp.lang.Parallel;
+import org.jcsp.lang.SharedChannelInput;
+import org.jcsp.lang.SharedChannelInputInt;
 import org.jcsp.util.InfiniteBuffer;
 
 /**
@@ -191,21 +199,102 @@ public class MainFrame extends javax.swing.JFrame {
             } else {
               throw new IllegalArgumentException("Line 4 must start with \"class:\"");
             }
+            JCodeModel codeModel = new JCodeModel();
+            JPackage jp = codeModel._package("");
+            JBlock _b = jp._class("Blank").init();
             switch (mode) {
                 case "o2o":
-                    asdf;
+                case "one2one":
+                    if ("int".equals(clazz)) {
+                        Class channelClazz = One2OneChannelInt.class;
+                        String channelFactoryMethod = "one2oneInt";
+                        Class channelInClazz = AltingChannelInputInt.class;
+                        Class channelOutClazz = ChannelOutputInt.class;
+                        JVar l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
+                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
+                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
+                    } else {
+                        Class channelClazz = One2OneChannel.class;
+                        Class channelInClazz = AltingChannelInput.class;
+                        Class channelOutClazz = ChannelOutput.class;
+                        String channelFactoryMethod = "one2one";
+                        AbstractJClass generic = codeModel.ref(clazz);
+                        JVar l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
+                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
+                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
+                    }
                     break;
                 case "o2a":
-                    asdf;
+                case "one2any":
+                    if ("int".equals(clazz)) {
+                        Class channelClazz = One2AnyChannelInt.class;
+                        String channelFactoryMethod = "one2anyInt";
+                        Class channelInClazz = SharedChannelInputInt.class;
+                        Class channelOutClazz = ChannelOutputInt.class;
+                        JVar l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
+                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
+                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
+                    } else {
+                        Class channelClazz = One2AnyChannel.class;
+                        Class channelInClazz = SharedChannelInput.class;
+                        Class channelOutClazz = ChannelOutput.class;
+                        String channelFactoryMethod = "one2any";
+                        AbstractJClass generic = codeModel.ref(clazz);
+                        JVar l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
+                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
+                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
+                    }
                     break;
                 case "a2o":
-                    asdf;
+                case "any2one":
+                    if ("int".equals(clazz)) {
+                        Class channelClazz = Any2OneChannelInt.class;
+                        String channelFactoryMethod = "any2oneInt";
+                        Class channelInClazz = AltingChannelInputInt.class;
+                        Class channelOutClazz = ChannelOutputInt.class;
+                        JVar l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
+                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
+                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
+                    } else {
+                        Class channelClazz = Any2OneChannel.class;
+                        Class channelInClazz = AltingChannelInput.class;
+                        Class channelOutClazz = ChannelOutput.class;
+                        String channelFactoryMethod = "any2one";
+                        AbstractJClass generic = codeModel.ref(clazz);
+                        JVar l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
+                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
+                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
+                    }
                     break;
                 case "a2a":
-                    asdf;
+                case "any2any":
+                    if ("int".equals(clazz)) {
+                        Class channelClazz = Any2AnyChannelInt.class;
+                        String channelFactoryMethod = "any2anyInt";
+                        Class channelInClazz = SharedChannelInputInt.class;
+                        Class channelOutClazz = ChannelOutputInt.class;
+                        JVar l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
+                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
+                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
+                    } else {
+                        Class channelClazz = Any2AnyChannel.class;
+                        Class channelInClazz = SharedChannelInput.class;
+                        Class channelOutClazz = ChannelOutput.class;
+                        String channelFactoryMethod = "any2any";
+                        AbstractJClass generic = codeModel.ref(clazz);
+                        JVar l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
+                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
+                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
+                    }
                     break;
+                default:
+                    throw new IllegalArgumentException("Mode must be one of: {o2o, o2a, a2o, a2a, one2one, one2any, any2one, any2any}");
             }
-            break;
+
+            // Generate the code
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            codeModel.build(new SingleStreamCodeWriter(baos));
+            return new String(baos.toByteArray());
         default:
             throw new RuntimeException("Unhandled type: " + type);
     }
