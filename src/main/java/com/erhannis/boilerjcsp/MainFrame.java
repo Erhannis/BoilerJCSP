@@ -151,7 +151,6 @@ public class MainFrame extends javax.swing.JFrame {
     */
     String name;
     String type;
-    ArrayList<ChannelDescription> channels = new ArrayList<>();
     
     List<String> lines = Arrays.<String>asList(spec.split("\\r?\\n"));
     lines = lines.stream().filter((line) -> !line.isEmpty()).map((line) -> line.replaceAll("[\\s]+", " ")).collect(Collectors.toList());
@@ -169,11 +168,51 @@ public class MainFrame extends javax.swing.JFrame {
     } else {
       throw new IllegalArgumentException("Line 2 must start with \"type:\"");
     }
-    List<String> validTypes = Arrays.asList(new String[]{"processinterface"});
+    List<String> validTypes = Arrays.asList(new String[]{"processinterface", "channel"});
     if (!validTypes.contains(type)) {
       throw new IllegalArgumentException("Type must be one of {" + String.join(", ", validTypes) + "}");
     }
     
+    switch (type) {
+        case "processinterface":
+            return makeProcessInterface(spec, name, lines);
+        case "channel":
+            String mode;
+            String clazz;
+            line = lines.remove(0).replaceAll(" ", "");
+            if (line.startsWith("mode:")) {
+              mode = line.substring("mode:".length());
+            } else {
+              throw new IllegalArgumentException("Line 3 must start with \"mode:\"");
+            }
+            line = lines.remove(0).replaceAll(" ", "");
+            if (line.startsWith("class:")) {
+              clazz = line.substring("class:".length());
+            } else {
+              throw new IllegalArgumentException("Line 4 must start with \"class:\"");
+            }
+            switch (mode) {
+                case "o2o":
+                    asdf;
+                    break;
+                case "o2a":
+                    asdf;
+                    break;
+                case "a2o":
+                    asdf;
+                    break;
+                case "a2a":
+                    asdf;
+                    break;
+            }
+            break;
+        default:
+            throw new RuntimeException("Unhandled type: " + type);
+    }
+  }
+  
+  private static String makeProcessInterface(String spec, String name, List<String> lines) throws JClassAlreadyExistsException, IOException {
+    ArrayList<ChannelDescription> channels = new ArrayList<>();
     for (String l : lines) {
       if (l.startsWith("channelOut:")) {
         l = l.substring("channelOut:".length(), l.length());
