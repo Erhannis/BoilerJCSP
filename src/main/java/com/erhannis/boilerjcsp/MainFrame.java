@@ -237,7 +237,11 @@ public class MainFrame extends javax.swing.JFrame {
             }
             JCodeModel codeModel = new JCodeModel();
             JPackage jp = codeModel._package("");
-            JBlock _b = jp._class("Blank").init();
+            JDefinedClass _blank = jp._class("Blank");
+            JBlock _b = _blank.init();
+            JVar l_c;
+            JVar l_ci;
+            JVar l_co;
             switch (mode) {
                 case "o2o":
                 case "one2one":
@@ -246,18 +250,18 @@ public class MainFrame extends javax.swing.JFrame {
                         String channelFactoryMethod = "one2oneInt";
                         Class channelInClazz = AltingChannelInputInt.class;
                         Class channelOutClazz = ChannelOutputInt.class;
-                        JVar l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
-                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
-                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
+                        l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
+                        l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
+                        l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
                     } else {
                         Class channelClazz = One2OneChannel.class;
                         Class channelInClazz = AltingChannelInput.class;
                         Class channelOutClazz = ChannelOutput.class;
                         String channelFactoryMethod = "one2one";
                         AbstractJClass generic = codeModel.ref(clazz);
-                        JVar l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
-                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
-                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
+                        l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
+                        l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
+                        l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
                     }
                     break;
                 case "o2a":
@@ -267,18 +271,18 @@ public class MainFrame extends javax.swing.JFrame {
                         String channelFactoryMethod = "one2anyInt";
                         Class channelInClazz = SharedChannelInputInt.class;
                         Class channelOutClazz = ChannelOutputInt.class;
-                        JVar l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
-                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
-                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
+                        l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
+                        l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
+                        l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
                     } else {
                         Class channelClazz = One2AnyChannel.class;
                         Class channelInClazz = SharedChannelInput.class;
                         Class channelOutClazz = ChannelOutput.class;
                         String channelFactoryMethod = "one2any";
                         AbstractJClass generic = codeModel.ref(clazz);
-                        JVar l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
-                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
-                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
+                        l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
+                        l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
+                        l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
                     }
                     break;
                 case "a2o":
@@ -288,18 +292,18 @@ public class MainFrame extends javax.swing.JFrame {
                         String channelFactoryMethod = "any2oneInt";
                         Class channelInClazz = AltingChannelInputInt.class;
                         Class channelOutClazz = ChannelOutputInt.class;
-                        JVar l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
-                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
-                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
+                        l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
+                        l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
+                        l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
                     } else {
                         Class channelClazz = Any2OneChannel.class;
                         Class channelInClazz = AltingChannelInput.class;
                         Class channelOutClazz = ChannelOutput.class;
                         String channelFactoryMethod = "any2one";
                         AbstractJClass generic = codeModel.ref(clazz);
-                        JVar l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
-                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
-                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
+                        l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
+                        l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
+                        l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
                     }
                     break;
                 case "a2a":
@@ -309,23 +313,26 @@ public class MainFrame extends javax.swing.JFrame {
                         String channelFactoryMethod = "any2anyInt";
                         Class channelInClazz = SharedChannelInputInt.class;
                         Class channelOutClazz = ChannelOutputInt.class;
-                        JVar l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
-                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
-                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
+                        l_c = _b.decl(codeModel.ref(channelClazz), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod));
+                        l_ci = _b.decl(codeModel.ref(channelInClazz), name + "In", l_c.invoke("in"));
+                        l_co = _b.decl(codeModel.ref(channelOutClazz), name + "Out", l_c.invoke("out"));
                     } else {
                         Class channelClazz = Any2AnyChannel.class;
                         Class channelInClazz = SharedChannelInput.class;
                         Class channelOutClazz = ChannelOutput.class;
                         String channelFactoryMethod = "any2any";
                         AbstractJClass generic = codeModel.ref(clazz);
-                        JVar l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
-                        JVar l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
-                        JVar l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
+                        l_c = _b.decl(codeModel.ref(channelClazz).narrow(generic), name + "Channel", codeModel.ref(Channel.class).staticInvoke(channelFactoryMethod).narrow(generic));
+                        l_ci = _b.decl(codeModel.ref(channelInClazz).narrow(generic), name + "In", l_c.invoke("in"));
+                        l_co = _b.decl(codeModel.ref(channelOutClazz).narrow(generic), name + "Out", l_c.invoke("out"));
                     }
                     break;
                 default:
                     throw new IllegalArgumentException("Mode must be one of: {o2o, o2a, a2o, a2a, one2one, one2any, any2one, any2any}");
             }
+            _blank.field(JMod.PRIVATE | JMod.FINAL, l_c.type(), l_c.name());
+            _blank.field(JMod.PRIVATE | JMod.FINAL, l_ci.type(), l_ci.name());
+            _blank.field(JMod.PRIVATE | JMod.FINAL, l_co.type(), l_co.name());
 
             // Generate the code
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
