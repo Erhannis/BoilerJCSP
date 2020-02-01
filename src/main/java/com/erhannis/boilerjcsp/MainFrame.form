@@ -59,6 +59,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnExampleChannel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnExampleCallProcess" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane2" alignment="0" pref="249" max="32767" attributes="0"/>
               </Group>
@@ -72,6 +74,7 @@
                           <Component id="btnGenerate" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnExampleProcessInterface" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnExampleChannel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnExampleCallProcess" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -119,6 +122,15 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExampleChannelActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnExampleCallProcess">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="CP"/>
+                <Property name="toolTipText" type="java.lang.String" value="Example: channel"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExampleCallProcessActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
