@@ -22,6 +22,7 @@ import com.helger.jcodemodel.JPackage;
 import com.helger.jcodemodel.JSwitch;
 import com.helger.jcodemodel.JVar;
 import com.helger.jcodemodel.writer.SingleStreamCodeWriter;
+import java.awt.event.KeyEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -96,6 +97,11 @@ public class MainFrame extends javax.swing.JFrame {
         taSpecification.setColumns(20);
         taSpecification.setRows(5);
         taSpecification.setText("name: UITest\ntype: processinterface\nchannelOut: int channel1\nchannelOut: java.lang.String channel2\nchannelOut: int channel3");
+        taSpecification.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                taSpecificationKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(taSpecification);
 
         btnExampleProcessInterface.setText("Pi");
@@ -183,6 +189,12 @@ public class MainFrame extends javax.swing.JFrame {
                                 "mode: any2one\n" +
                                 "class: int");
     }//GEN-LAST:event_btnExampleChannelActionPerformed
+
+    private void taSpecificationKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taSpecificationKeyPressed
+        if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnGenerateActionPerformed(null);
+        }
+    }//GEN-LAST:event_taSpecificationKeyPressed
 
   private static String generate(String spec) throws IOException, JClassAlreadyExistsException {
     /*
